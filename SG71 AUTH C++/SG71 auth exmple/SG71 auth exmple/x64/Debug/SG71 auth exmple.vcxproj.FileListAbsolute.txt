@@ -1,0 +1,3 @@
+D:\AUTH\SG71 AUTH C++\SG71 auth exmple\x64\Debug\libcurl-d.dll
+D:\AUTH\SG71 AUTH C++\SG71 auth exmple\x64\Debug\zlibd1.dll
+D:\AUTH\SG71 AUTH C++\SG71 auth exmple\SG71 auth exmple\x64\Debug\SG71 aut.D995EEC3.Up2Date

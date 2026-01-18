@@ -1,0 +1,8 @@
+﻿  SG71 auth exmple.cpp
+  SG71auth.cpp
+D:\AUTH\SG71 AUTH C++\SG71 auth exmple\SG71auth.cpp(153,68): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
+D:\AUTH\SG71 AUTH C++\SG71 auth exmple\SG71auth.cpp(157,43): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  SG71 auth exmple.vcxproj -> D:\AUTH\SG71 AUTH C++\SG71 auth exmple\x64\Debug\SG71 auth exmple.exe
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.
