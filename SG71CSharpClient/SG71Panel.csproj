@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>SG71Panel</AssemblyName>
+    <RootNamespace>SG71Panel</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\SG71Client.cs" Link="SG71Client.cs" />
+    <Compile Include="..\IntegrityGuard.cs" Link="IntegrityGuard.cs" />
+  </ItemGroup>
+
+</Project>
