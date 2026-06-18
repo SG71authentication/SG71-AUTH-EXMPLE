@@ -108,7 +108,9 @@ internal static class Program
             return !update.ForceUpdate;
 
         Console.WriteLine("\nDownloading update next to current EXE...");
-        var (downloaded, newExePath) = await SelfUpdater.DownloadUpdateBesideExeAsync(update.UpdateUrl);
+        var progress = new Progress<int>(pct => Console.Write($"\r  Downloading... {pct}%   "));
+        var (downloaded, newExePath) = await SelfUpdater.DownloadUpdateBesideExeAsync(update.UpdateUrl, progress);
+        Console.WriteLine();
         if (!downloaded)
         {
             Console.WriteLine("Download failed.");

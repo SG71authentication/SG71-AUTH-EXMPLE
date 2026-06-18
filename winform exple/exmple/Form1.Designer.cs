@@ -24,8 +24,12 @@ namespace exmple
             this.login = new System.Windows.Forms.Button();
             this.register = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.panelUpdate = new System.Windows.Forms.Panel();
+            this.lblUpdatePercent = new System.Windows.Forms.Label();
+            this.progressUpdate = new System.Windows.Forms.ProgressBar();
             this.panelMain = new System.Windows.Forms.Panel();
             this.panelMain.SuspendLayout();
+            this.panelUpdate.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -153,12 +157,46 @@ namespace exmple
             this.register.UseVisualStyleBackColor = false;
             this.register.Click += new System.EventHandler(this.register_Click);
             // 
+            // panelUpdate
+            // 
+            this.panelUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelUpdate.BackColor = System.Drawing.Color.FromArgb(24, 24, 32);
+            this.panelUpdate.Controls.Add(this.progressUpdate);
+            this.panelUpdate.Controls.Add(this.lblUpdatePercent);
+            this.panelUpdate.Location = new System.Drawing.Point(24, 300);
+            this.panelUpdate.Name = "panelUpdate";
+            this.panelUpdate.Size = new System.Drawing.Size(352, 52);
+            this.panelUpdate.TabIndex = 4;
+            this.panelUpdate.Visible = false;
+            // 
+            // lblUpdatePercent
+            // 
+            this.lblUpdatePercent.AutoSize = true;
+            this.lblUpdatePercent.ForeColor = System.Drawing.Color.FromArgb(120, 170, 255);
+            this.lblUpdatePercent.Location = new System.Drawing.Point(4, 6);
+            this.lblUpdatePercent.Name = "lblUpdatePercent";
+            this.lblUpdatePercent.Size = new System.Drawing.Size(118, 13);
+            this.lblUpdatePercent.TabIndex = 0;
+            this.lblUpdatePercent.Text = "Downloading update… 0%";
+            // 
+            // progressUpdate
+            // 
+            this.progressUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressUpdate.Location = new System.Drawing.Point(4, 26);
+            this.progressUpdate.MarqueeAnimationSpeed = 0;
+            this.progressUpdate.Name = "progressUpdate";
+            this.progressUpdate.Size = new System.Drawing.Size(344, 18);
+            this.progressUpdate.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressUpdate.TabIndex = 1;
+            // 
             // lblStatus
             // 
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus.ForeColor = System.Drawing.Color.DimGray;
-            this.lblStatus.Location = new System.Drawing.Point(24, 308);
+            this.lblStatus.Location = new System.Drawing.Point(24, 360);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(352, 32);
             this.lblStatus.TabIndex = 3;
@@ -169,7 +207,8 @@ namespace exmple
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(18, 18, 24);
-            this.ClientSize = new System.Drawing.Size(400, 360);
+            this.ClientSize = new System.Drawing.Size(400, 400);
+            this.Controls.Add(this.panelUpdate);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.lblApi);
@@ -182,6 +221,8 @@ namespace exmple
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
+            this.panelUpdate.ResumeLayout(false);
+            this.panelUpdate.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -198,5 +239,8 @@ namespace exmple
         private System.Windows.Forms.Button login;
         private System.Windows.Forms.Button register;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Panel panelUpdate;
+        private System.Windows.Forms.Label lblUpdatePercent;
+        private System.Windows.Forms.ProgressBar progressUpdate;
     }
 }

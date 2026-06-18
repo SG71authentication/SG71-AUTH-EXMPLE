@@ -9,7 +9,7 @@
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)\..\..\..\'))</RepoRoot>
+    <SharedRoot>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)\..\..'))</SharedRoot>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(RepoRoot)examples\SG71Client.cs" Link="Shared\SG71Client.cs" />
-    <Compile Include="$(RepoRoot)examples\SG71AuthExample\SelfUpdater.cs" Link="Shared\SelfUpdater.cs" />
+    <Compile Include="$(SharedRoot)\SG71Client.cs" Link="Shared\SG71Client.cs" />
+    <Compile Include="$(SharedRoot)\SG71AuthExample\SelfUpdater.cs" Link="Shared\SelfUpdater.cs" />
   </ItemGroup>
 
   <ItemGroup>

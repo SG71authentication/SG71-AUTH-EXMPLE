@@ -150,13 +150,16 @@ namespace SG71AuthClient
                 licenseKey
             });
 
-        public static async Task<bool> DownloadUpdateAsync(string updateUrl, string destinationPath)
+        public static async Task<bool> DownloadUpdateAsync(string updateUrl, string destinationPath, IProgress<int> progress = null)
         {
-            var result = await DownloadUpdateWithMessageAsync(updateUrl, destinationPath);
+            var result = await DownloadUpdateWithMessageAsync(updateUrl, destinationPath, progress);
             return result.ok;
         }
 
-        public static async Task<(bool ok, string message)> DownloadUpdateWithMessageAsync(string updateUrl, string destinationPath)
+        public static async Task<(bool ok, string message)> DownloadUpdateWithMessageAsync(
+            string updateUrl,
+            string destinationPath,
+            IProgress<int> progress = null)
         {
             if (string.IsNullOrWhiteSpace(updateUrl))
                 return (false, "Update URL is empty.");
@@ -174,11 +177,29 @@ namespace SG71AuthClient
                     if (!response.IsSuccessStatusCode)
                         return (false, $"Download failed: HTTP {(int)response.StatusCode} {response.ReasonPhrase}");
 
+                    var totalBytes = response.Content.Headers.ContentLength ?? -1L;
+                    progress?.Report(0);
+
                     using (var stream = await response.Content.ReadAsStreamAsync())
                     using (var file = File.Create(destinationPath))
                     {
-                        await stream.CopyToAsync(file);
+                        var buffer = new byte[81920];
+                        long bytesRead = 0;
+                        int read;
+                        while ((read = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                        {
+                            await file.WriteAsync(buffer, 0, read);
+                            bytesRead += read;
+                            if (totalBytes > 0)
+                            {
+                                var pct = (int)Math.Min(100, bytesRead * 100 / totalBytes);
+                                progress?.Report(pct);
+                            }
+                        }
                     }
+
+                    if (totalBytes <= 0)
+                        progress?.Report(100);
                 }
                 return (true, "Update downloaded successfully.");
             }

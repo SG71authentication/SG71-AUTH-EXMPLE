@@ -18,7 +18,7 @@ npm run dev:all
 
 - **Form1** — init, version check, login, register (license key)
 - **Form2** — dashboard (user, expiry, HWID), check updates, logout
-- Auto-update download beside EXE (same as console example)
+- **Self-update** — downloads beside EXE with **progress bar and %**, replaces old EXE, restarts automatically
 
 ## Production API
 

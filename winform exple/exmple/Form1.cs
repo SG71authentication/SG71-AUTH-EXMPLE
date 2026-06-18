@@ -22,6 +22,9 @@ namespace exmple
             lblApi.Text = "API: " + SG71Client.ApiBaseUrl;
             _client = new SG71Client(AuthConfig.AdminId, AuthConfig.AppName, AuthConfig.AppVersion);
 
+            if (Program.JustUpdated)
+                SetStatus("Updated successfully. You are on the latest version.");
+
             await RunInitAsync();
         }
 
@@ -78,18 +81,46 @@ namespace exmple
                 return;
             }
 
-            SetBusy(true, "Downloading update…");
-            var (ok, path) = await SelfUpdater.DownloadUpdateBesideExeAsync(updateUrl);
-            if (!ok)
+            SetBusy(true, "Preparing download…");
+            ShowUpdateProgress(0, true);
+            try
             {
-                SetBusy(false, "Download failed.");
-                MessageBox.Show("Could not download the update file.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                var progress = new Progress<int>(pct =>
+                {
+                    if (InvokeRequired)
+                    {
+                        BeginInvoke(new Action(() => ShowUpdateProgress(pct, true)));
+                        return;
+                    }
+                    ShowUpdateProgress(pct, true);
+                });
 
-            SetStatus("Restarting with new version…");
-            await Task.Delay(300);
-            SelfUpdater.ApplyUpdateAndRestart(path);
+                var (ok, path) = await SelfUpdater.DownloadUpdateBesideExeAsync(updateUrl, progress);
+                if (!ok)
+                {
+                    ShowUpdateProgress(0, false);
+                    SetStatus("Download failed.", true);
+                    MessageBox.Show("Could not download the update file.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                ShowUpdateProgress(100, true);
+                SetStatus("Installing update…");
+                await Task.Delay(300);
+                SelfUpdater.ApplyUpdateAndRestart(path);
+            }
+            finally
+            {
+                ShowUpdateProgress(0, false);
+                SetBusy(false, null);
+            }
+        }
+
+        private void ShowUpdateProgress(int percent, bool visible)
+        {
+            panelUpdate.Visible = visible;
+            progressUpdate.Value = Math.Max(0, Math.Min(100, percent));
+            lblUpdatePercent.Text = visible ? $"Downloading update… {percent}%" : "";
         }
 
         private async void login_Click(object sender, EventArgs e)

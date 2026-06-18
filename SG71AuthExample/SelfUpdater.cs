@@ -35,7 +35,9 @@ public static class SelfUpdater
     /// <summary>
     /// Download update to "{CurrentExeName}.update.exe" in the same folder as the running app.
     /// </summary>
-    public static async Task<(bool ok, string path)> DownloadUpdateBesideExeAsync(string updateUrl)
+    public static async Task<(bool ok, string path)> DownloadUpdateBesideExeAsync(
+        string updateUrl,
+        IProgress<int> progress = null)
     {
         var currentExe = GetExecutablePath();
         var dir = Path.GetDirectoryName(currentExe)!;
@@ -52,10 +54,11 @@ public static class SelfUpdater
             catch { /* best effort */ }
         }
 
-        var ok = await SG71AuthClient.SG71Client.DownloadUpdateAsync(updateUrl, downloadPath);
-        if (!ok || !File.Exists(downloadPath) || new FileInfo(downloadPath).Length == 0)
+        var result = await SG71AuthClient.SG71Client.DownloadUpdateWithMessageAsync(updateUrl, downloadPath, progress);
+        if (!result.ok || !File.Exists(downloadPath) || new FileInfo(downloadPath).Length == 0)
             return (false, downloadPath);
 
+        progress?.Report(100);
         return (true, downloadPath);
     }
 
